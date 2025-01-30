@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import Image from "next/image";
 import { LatestPost } from "~/app/_components/post";
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
@@ -52,6 +53,16 @@ export default async function Home() {
             <div className={styles.authContainer}>
               <p className={styles.showcaseText}>
                 {session && <span>Logged in as {session.user?.name}</span>}
+                <br />
+                {session && <span>{session.user?.email}</span>}
+                {session?.user.image && (
+                  <Image
+                    src={session.user.image}
+                    width={50}
+                    height={50}
+                    alt="user image"
+                  />
+                )}
               </p>
               <Link
                 href={session ? "/api/auth/signout" : "/api/auth/signin"}
